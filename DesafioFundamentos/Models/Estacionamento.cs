@@ -69,15 +69,50 @@ namespace DesafioFundamentos.Models
 
                 decimal valorTotal = 0;
                 string detalheTempo = "";
+                
                 if (tipoCobranca == "2")
                 {
-                    valorTotal = precoInicial + precoPorHora * (decimal)totalHoras;
-                    detalheTempo = $"{tempo.TotalMinutes:F0} minutos ({totalHoras:F2} horas)";
+                    // Cobrança proporcional: primeira hora inclusa no preço inicial
+                    if (totalHoras <= 1.0)
+                    {
+                        valorTotal = precoInicial;
+                        if (tempo.TotalMinutes < 1)
+                        {
+                            detalheTempo = $"{tempo.TotalSeconds:F0} segundos - primeira hora inclusa";
+                        }
+                        else
+                        {
+                            detalheTempo = $"{tempo.TotalMinutes:F0} minutos ({totalHoras:F2} horas) - primeira hora inclusa";
+                        }
+                    }
+                    else
+                    {
+                        decimal horasExtras = (decimal)(totalHoras - 1.0);
+                        valorTotal = precoInicial + precoPorHora * horasExtras;
+                        detalheTempo = $"{tempo.TotalMinutes:F0} minutos ({totalHoras:F2} horas) - {horasExtras:F2} horas extras";
+                    }
                 }
                 else
                 {
-                    valorTotal = precoInicial + precoPorHora * horasCheias;
-                    detalheTempo = $"{horasCheias} hora(s) (arredondado)";
+                    // Cobrança por hora cheia: primeira hora inclusa no preço inicial
+                    if (horasCheias <= 1)
+                    {
+                        valorTotal = precoInicial;
+                        if (tempo.TotalMinutes < 1)
+                        {
+                            detalheTempo = $"{tempo.TotalSeconds:F0} segundos - primeira hora inclusa";
+                        }
+                        else
+                        {
+                            detalheTempo = $"{tempo.TotalMinutes:F0} minutos - primeira hora inclusa";
+                        }
+                    }
+                    else
+                    {
+                        int horasExtras = horasCheias - 1;
+                        valorTotal = precoInicial + precoPorHora * horasExtras;
+                        detalheTempo = $"{horasCheias} hora(s) - {horasExtras} hora(s) extra(s)";
+                    }
                 }
 
                 veiculos.Remove(veiculo);

@@ -21,6 +21,8 @@
  * • Sistema automático de registro de entrada com data/hora
  * • Calculadora de tempo estacionado em tempo real
  * • Duas opções de cobrança: hora cheia ou proporcional ao tempo
+ * • PRIMEIRA HORA SEMPRE INCLUSA no preço inicial (como estacionamentos reais)
+ * • Cobrança adicional apenas após ultrapassar a primeira hora
  * • Interface amigável com mensagens claras de erro e sucesso
  * 
  * 🎯 MELHORIAS NA EXPERIÊNCIA DO USUÁRIO:
@@ -33,6 +35,8 @@
  * • Uso de regex para validação de placas brasileiras
  * • Cálculo automático de tempo com TimeSpan
  * • Sistema de cobrança flexível (hora cheia vs proporcional)
+ * • Lógica inteligente: primeira hora inclusa + cobrança de horas extras
+ * • Exibição precisa de tempo (segundos, minutos ou horas conforme necessário)
  * • Arquitetura limpa com separação de responsabilidades
  * • Código otimizado sem duplicações ou dependências desnecessárias
  * 
