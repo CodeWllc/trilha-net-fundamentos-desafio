@@ -6,20 +6,28 @@ Console.OutputEncoding = System.Text.Encoding.UTF8;
 decimal precoInicial = 0;
 decimal precoPorHora = 0;
 
-Console.WriteLine("Seja bem vindo ao sistema de estacionamento!\n" +
-                  "Digite o preço inicial:");
-precoInicial = Convert.ToDecimal(Console.ReadLine());
+Console.WriteLine("Seja bem vindo ao sistema de estacionamento!\n");
+while (true)
+{
+    Console.Write("Digite o preço inicial: ");
+    string entrada = Console.ReadLine();
+    if (decimal.TryParse(entrada, out precoInicial) && precoInicial >= 0)
+        break;
+    Console.WriteLine("Valor inválido. Digite um número válido para o preço inicial.");
+}
 
-Console.WriteLine("Agora digite o preço por hora:");
-precoPorHora = Convert.ToDecimal(Console.ReadLine());
+while (true)
+{
+    Console.Write("Agora digite o preço por hora: ");
+    string entrada = Console.ReadLine();
+    if (decimal.TryParse(entrada, out precoPorHora) && precoPorHora >= 0)
+        break;
+    Console.WriteLine("Valor inválido. Digite um número válido para o preço por hora.");
+}
 
-// Instancia a classe Estacionamento, já com os valores obtidos anteriormente
 Estacionamento es = new Estacionamento(precoInicial, precoPorHora);
 
-string opcao = string.Empty;
 bool exibirMenu = true;
-
-// Realiza o loop do menu
 while (exibirMenu)
 {
     Console.Clear();
@@ -29,26 +37,28 @@ while (exibirMenu)
     Console.WriteLine("3 - Listar veículos");
     Console.WriteLine("4 - Encerrar");
 
-    switch (Console.ReadLine())
+    string opcao = string.Empty;
+    while (true)
+    {
+        opcao = Console.ReadLine();
+        if (opcao == "1" || opcao == "2" || opcao == "3" || opcao == "4")
+            break;
+        Console.WriteLine("Opção inválida. Digite 1, 2, 3 ou 4:");
+    }
+
+    switch (opcao)
     {
         case "1":
             es.AdicionarVeiculo();
             break;
-
         case "2":
             es.RemoverVeiculo();
             break;
-
         case "3":
             es.ListarVeiculos();
             break;
-
         case "4":
             exibirMenu = false;
-            break;
-
-        default:
-            Console.WriteLine("Opção inválida");
             break;
     }
 
